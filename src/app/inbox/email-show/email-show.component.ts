@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { Email } from '../email';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-email-show',
@@ -6,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./email-show.component.scss']
 })
 export class EmailShowComponent implements OnInit {
+  email!: Email;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute) {
 
-  ngOnInit(): void {
+     this.email = route.snapshot.data['email'];
+     
+     this.route.data.subscribe(({  email }) => {
+        this.email = email;
+     });
+    }
+
+  ngOnInit(): void {    
   }
-
 }
